@@ -1,0 +1,12 @@
+[build]
+  command = "echo Building Functions"
+
+[functions]
+  node_bundler = "zisi"
+  included_files = ["public/**", "data/**", "module/**", "plugins/**"]
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
