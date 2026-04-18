@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const tmpPath = require('os').tmpdir()
 const { cookieToJson } = require('./util')
+const { resolveProjectPath } = require('./util/projectPath')
 
 const anonymousTokenPath = path.resolve(tmpPath, 'anonymous_token')
 if (!fs.existsSync(anonymousTokenPath)) {
@@ -11,7 +12,7 @@ if (!fs.existsSync(anonymousTokenPath)) {
 /** @type {Record<string, any>} */
 let obj = {}
 
-const modulePath = path.join(__dirname, 'module')
+const modulePath = resolveProjectPath('module')
 const moduleFiles = fs.readdirSync(modulePath).reverse()
 
 let requestModule = null

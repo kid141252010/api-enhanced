@@ -13,6 +13,11 @@ function ensureAnonymousTokenFile() {
 }
 
 async function createHandler() {
+  process.env.NCM_API_PROJECT_ROOT =
+    process.env.NCM_API_PROJECT_ROOT ||
+    process.env.LAMBDA_TASK_ROOT ||
+    process.cwd()
+
   ensureAnonymousTokenFile()
 
   const generateConfig = require('../../generateConfig')

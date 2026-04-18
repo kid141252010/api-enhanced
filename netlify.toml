@@ -21,7 +21,13 @@
     "xml2js",
     "yargs"
   ]
-  included_files = ["public/**", "data/**", "module/**", "plugins/**"]
+  included_files = [
+    "public/**",
+    "data/**",
+    "module/**",
+    "plugins/**",
+    "util/**"
+  ]
 
 [[redirects]]
   from = "/*"

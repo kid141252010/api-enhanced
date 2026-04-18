@@ -10,6 +10,7 @@ const { cookieToJson } = require('./util/index')
 const fileUpload = require('express-fileupload')
 const decode = require('safe-decode-uri-component')
 const logger = require('./util/logger.js')
+const { resolveProjectPath } = require('./util/projectPath')
 
 /**
  * The version check result.
@@ -194,7 +195,7 @@ async function constructServer(moduleDefs) {
   /**
    * Serving static files
    */
-  app.use(express.static(path.join(__dirname, 'public')))
+  app.use(express.static(resolveProjectPath('public')))
   /**
    * CORS & Preflight request
    */
@@ -277,7 +278,7 @@ async function constructServer(moduleDefs) {
    */
   const moduleDefinitions =
     moduleDefs ||
-    (await getModulesDefinitions(path.join(__dirname, 'module'), special))
+    (await getModulesDefinitions(resolveProjectPath('module'), special))
 
   for (const moduleDef of moduleDefinitions) {
     // Register the route.

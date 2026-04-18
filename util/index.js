@@ -1,6 +1,6 @@
 const logger = require('./logger')
 const fs = require('fs')
-const path = require('path')
+const { resolveProjectPath } = require('./projectPath')
 
 // IP地址转换函数
 function ipToInt(ip) {
@@ -38,7 +38,7 @@ function parseCIDR(cidr) {
 // 从china_ip_ranges.txt加载中国IP段（CIDR格式）
 const chinaIPRanges = (function loadChinaIPRanges() {
   try {
-    const filePath = path.join(__dirname, '../data/china_ip_ranges.txt')
+    const filePath = resolveProjectPath('data', 'china_ip_ranges.txt')
     const content = fs.readFileSync(filePath, 'utf-8')
     const lines = content
       .split('\n')
