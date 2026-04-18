@@ -2,7 +2,25 @@
   command = "echo Building Functions"
 
 [functions]
-  node_bundler = "zisi"
+  node_bundler = "esbuild"
+  external_node_modules = [
+    "@neteasecloudmusicapienhanced/unblockmusic-utils",
+    "axios",
+    "crypto-js",
+    "dotenv",
+    "express",
+    "express-fileupload",
+    "gzip",
+    "music-metadata",
+    "node-forge",
+    "pac-proxy-agent",
+    "qrcode",
+    "safe-decode-uri-component",
+    "serverless-http",
+    "tunnel",
+    "xml2js",
+    "yargs"
+  ]
   included_files = ["public/**", "data/**", "module/**", "plugins/**"]
 
 [[redirects]]
