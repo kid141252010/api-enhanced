@@ -1,33 +1,8 @@
 [build]
-  command = "echo Building Functions"
+  command = "node scripts/build-netlify-function.js"
 
 [functions]
-  node_bundler = "esbuild"
-  external_node_modules = [
-    "@neteasecloudmusicapienhanced/unblockmusic-utils",
-    "axios",
-    "crypto-js",
-    "dotenv",
-    "express",
-    "express-fileupload",
-    "gzip",
-    "music-metadata",
-    "node-forge",
-    "pac-proxy-agent",
-    "qrcode",
-    "safe-decode-uri-component",
-    "serverless-http",
-    "tunnel",
-    "xml2js",
-    "yargs"
-  ]
-  included_files = [
-    "public/**",
-    "data/**",
-    "module/**",
-    "plugins/**",
-    "util/**"
-  ]
+  directory = ".netlify/functions-dist"
 
 [[redirects]]
   from = "/*"

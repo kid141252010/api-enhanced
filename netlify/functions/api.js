@@ -5,24 +5,6 @@ const serverless = require('serverless-http')
 
 let handlerPromise
 
-function getCallableExport(moduleValue, exportName) {
-  if (typeof moduleValue === 'function') {
-    return moduleValue
-  }
-
-  if (moduleValue && typeof moduleValue.default === 'function') {
-    return moduleValue.default
-  }
-
-  if (exportName && moduleValue && typeof moduleValue[exportName] === 'function') {
-    return moduleValue[exportName]
-  }
-
-  throw new TypeError(
-    `${exportName || 'Required module'} is not a function`,
-  )
-}
-
 function ensureAnonymousTokenFile() {
   const anonymousTokenPath = path.resolve(os.tmpdir(), 'anonymous_token')
   if (!fs.existsSync(anonymousTokenPath)) {
@@ -31,21 +13,20 @@ function ensureAnonymousTokenFile() {
 }
 
 async function createHandler() {
+  // Resolve against the packaged npm module rather than the repo root.
+  const packageRoot = path.dirname(
+    require.resolve('@neteasecloudmusicapienhanced/api/package.json'),
+  )
+
   process.env.NCM_API_PROJECT_ROOT =
-    process.env.NCM_API_PROJECT_ROOT ||
-    process.env.LAMBDA_TASK_ROOT ||
-    process.cwd()
+    process.env.NCM_API_PROJECT_ROOT || packageRoot
 
   ensureAnonymousTokenFile()
 
-  const generateConfig = getCallableExport(
-    require('../../generateConfig'),
-    'generateConfig',
-  )
+  const generateConfig = require('@neteasecloudmusicapienhanced/api/generateConfig')
   await generateConfig()
 
-  const serverModule = require('../../server')
-  const constructServer = getCallableExport(serverModule, 'constructServer')
+  const { constructServer } = require('@neteasecloudmusicapienhanced/api/server')
   const app = await constructServer()
 
   return serverless(app)

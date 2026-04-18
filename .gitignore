@@ -8,5 +8,9 @@ examples/moddef.json
 bin
 anonymous_token
 .vercel
+.netlify/
+.netlify-functions-*/
+.npm-cache/
+.tmp-*/
 .env
 IFLOW.md

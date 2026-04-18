@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "start": "node app.js",
+    "build:netlify": "node scripts/build-netlify-function.js",
     "test": "mocha -r intelli-espower-loader -t 60000 server.test.js main.test.js --exit",
     "lint": "eslint \"**/*.{js,ts}\"",
     "lint-fix": "eslint --fix \"**/*.{js,ts}\"",
@@ -91,6 +92,7 @@
     "@types/node": "25.5.0",
     "@typescript-eslint/eslint-plugin": "^8.57.2",
     "@typescript-eslint/parser": "^8.57.2",
+    "adm-zip": "^0.5.17",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-html": "^8.1.4",
