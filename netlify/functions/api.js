@@ -5,6 +5,24 @@ const serverless = require('serverless-http')
 
 let handlerPromise
 
+function getCallableExport(moduleValue, exportName) {
+  if (typeof moduleValue === 'function') {
+    return moduleValue
+  }
+
+  if (moduleValue && typeof moduleValue.default === 'function') {
+    return moduleValue.default
+  }
+
+  if (exportName && moduleValue && typeof moduleValue[exportName] === 'function') {
+    return moduleValue[exportName]
+  }
+
+  throw new TypeError(
+    `${exportName || 'Required module'} is not a function`,
+  )
+}
+
 function ensureAnonymousTokenFile() {
   const anonymousTokenPath = path.resolve(os.tmpdir(), 'anonymous_token')
   if (!fs.existsSync(anonymousTokenPath)) {
@@ -20,10 +38,14 @@ async function createHandler() {
 
   ensureAnonymousTokenFile()
 
-  const generateConfig = require('../../generateConfig')
+  const generateConfig = getCallableExport(
+    require('../../generateConfig'),
+    'generateConfig',
+  )
   await generateConfig()
 
-  const { constructServer } = require('../../server')
+  const serverModule = require('../../server')
+  const constructServer = getCallableExport(serverModule, 'constructServer')
   const app = await constructServer()
 
   return serverless(app)
